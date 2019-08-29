@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>windflute</groupId>
+    <artifactId>http-json</artifactId>
+    <version>1.0.0</version>
+    <properties>
+
+        <!--<auto-service.version>1.0-rc6</auto-service.version>-->
+        <!--json相关依赖-->
+        <fastjson.version>1.2.54</fastjson.version>
+        <servlet-api.version>3.1.0</servlet-api.version>
+        <!--工具类相关依赖-->
+        <commons-codec.version>1.11</commons-codec.version>
+        <commons-io.version>2.4</commons-io.version>
+        <commons-text.version>1.6</commons-text.version>
+
+        <!--日志相关依赖-->
+        <slf4j.version>1.7.25</slf4j.version>
+        <logback.version>1.2.3</logback.version>
+        <janino.version>3.0.11</janino.version>
+        <!--ok http-->
+        <okhttp3.version>3.13.1</okhttp3.version>
+        <!--测试相关依赖-->
+        <junit.version>4.12</junit.version>
+    </properties>
+<dependencies>
+    <!-- https://mvnrepository.com/artifact/com.google.auto.service/auto-service -->
+    <!--<dependency>-->
+        <!--<groupId>com.google.auto.service</groupId>-->
+        <!--<artifactId>auto-service</artifactId>-->
+        <!--<version>${auto-service.version}</version>-->
+    <!--</dependency>-->
+    <!--测试相关依赖-->
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- 日志相关jar包 -->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>${logback.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.codehaus.janino</groupId>
+        <artifactId>janino</artifactId>
+        <version>${janino.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>okhttp</artifactId>
+        <version>${okhttp3.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>${commons-codec.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons-io.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-text</artifactId>
+        <version>${commons-text.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>${servlet-api.version}</version>
+    </dependency>
+    <!--json相关依赖-->
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>${fastjson.version}</version>
+    </dependency>
+</dependencies>
+</project>
