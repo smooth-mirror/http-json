@@ -2,7 +2,6 @@ package cn.windflute.http.filter;
 
 import cn.windflute.http.dto.ApiRequestDTO;
 import cn.windflute.http.servlet.PostParameterRequestWrapper;
-import cn.windflute.uitls.CollectionsUtil;
 import cn.windflute.uitls.ReflectUtil;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
@@ -11,22 +10,15 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+
 
 public abstract class BaseApiRequestAuthFilter implements Filter {
+
   private static final Logger LOGGER = LoggerFactory.getLogger(BaseApiRequestAuthFilter.class);
   /**
    * 应用验证失败默认提示
    */
   private static final String APP_DEFAULT_ERROR = "app invalid!";
-
-  /**
-   * 应用密钥标识后缀
-   */
-  private static final String APP_KEY_SUFFIX = ".appKey";
 
   /**
    * 时间戳，当前秒数
@@ -52,10 +44,11 @@ public abstract class BaseApiRequestAuthFilter implements Filter {
 
   /**
    * 根据appId获取appKey,获取的方式可以在数据库，简单的情况可以配置文件
+   * @param request 请求
    * @param appId 应用id
    * @return appKey
    */
-  public abstract String getAppKey(String appId);
+  public abstract String getAppKey(PostParameterRequestWrapper request,String appId);
 
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
@@ -88,14 +81,13 @@ public abstract class BaseApiRequestAuthFilter implements Filter {
       LOGGER.error("数据异常！");
       throw new ServletException(APP_DEFAULT_ERROR);
     }
-    String appKey =getAppKey(appId);
+    String appKey =getAppKey(request,appId);
     if (null == appKey) {
       LOGGER.error("应用：{}，appKey为空！", appId);
       throw new ServletException(APP_DEFAULT_ERROR);
     }
 
-    List<String> paramList = getMeedToSignParamList(request,apiRequestDTO);
-    if (!signatureRuleCheck(appKey,paramList,signature)) {
+    if (!signatureRuleCheck(request,apiRequestDTO,appKey)) {
       LOGGER.error("应用：{}，签名验证失败！", appId);
       throw new ServletException("签名验证失败！");
     }
@@ -104,33 +96,14 @@ public abstract class BaseApiRequestAuthFilter implements Filter {
   }
 
   /**
-   * 获取需要参与签名的列表
-   * @param request
-   * @param apiRequestDTO
-   * @return 需要参与签名的列表
-   */
-  public List<String> getMeedToSignParamList(PostParameterRequestWrapper request,ApiRequestDTO apiRequestDTO) {
-    List<String> paramList = new ArrayList<>();
-    paramList.add(apiRequestDTO.getAppId());
-    paramList.add(apiRequestDTO.getTimestamp());
-    List<String> nameList = apiRequestDTO.getTamperResistantNameList();
-    if(CollectionsUtil.isEmpty(nameList)){
-      return paramList;
-    }
-    for(String name : nameList){
-      paramList.add(String.valueOf(request.getParameter(name)));
-    }
-    return paramList;
-  }
-
-  /**
    * 签名验证
+   *
+   * @param request 请求
+   * @param apiRequestDTO 接口请求dto
    * @param appKey 密钥
-   * @param paramList 参与签名的参数列表
-   * @param needCheckSign 需要验证签名
    * @return 签名验证结果
    */
-  public abstract boolean signatureRuleCheck(String appKey, List<String> paramList, String needCheckSign);
+  public abstract boolean signatureRuleCheck(PostParameterRequestWrapper request,ApiRequestDTO apiRequestDTO,String appKey);
 
   public void handleRequestBeforeDoFilter(PostParameterRequestWrapper request) {
 

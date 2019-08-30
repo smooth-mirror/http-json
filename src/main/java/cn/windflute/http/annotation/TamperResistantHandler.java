@@ -14,7 +14,10 @@ public class TamperResistantHandler {
     private TamperResistantHandler() {
         //nothing
     }
-
+    /**
+     * 盐的位数
+     */
+    public static final int DEFAULT_SALT_LENGTH = 16;
     /**
      * 获取需要防篡改的对象的属性名-属性值map
      *
@@ -122,7 +125,7 @@ public class TamperResistantHandler {
             }
         };
         return getRequestJsonWithSign(params, appId, appKey, RandomStringUtils
-                        .random(16, true, true), signWithTamperResistant);
+                        .random(DEFAULT_SALT_LENGTH, true, true), signWithTamperResistant);
 
     }
 
