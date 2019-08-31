@@ -1,6 +1,7 @@
 package cn.windflute.http.servlet;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.text.StringEscapeUtils;
 
@@ -33,7 +34,6 @@ public class PostParameterRequestWrapper extends HttpServletRequestWrapper {
     this.params.putAll(request.getParameterMap());
     //读取输入流的请求参数，保存到bytes中
     this.bytes = IOUtils.toByteArray(request.getInputStream());
-
   }
 
   /**
@@ -126,7 +126,14 @@ public class PostParameterRequestWrapper extends HttpServletRequestWrapper {
     return new String(bytes, this.getCharacterEncoding());
   }
 
-
+  /**
+   * 获取post参数的json对象
+   * @return json对象
+   * @throws IOException
+   */
+  public JSONObject getPostParamJson() throws IOException {
+    return JSON.parseObject(getRequestParams());
+  }
   /**
    * enctype是application/x-www-form-urlencoded
    * 可以使用该方式获取参数列表
@@ -186,7 +193,7 @@ public class PostParameterRequestWrapper extends HttpServletRequestWrapper {
    * 添加输入流的参数到Parameter中
    */
   public void setParameterFromRequestInputStream() throws IOException {
-    setParametersByMap(JSON.parseObject(getRequestParams()));
+    setParametersByMap(getPostParamJson());
   }
 
   private static String xssEncode(String s)

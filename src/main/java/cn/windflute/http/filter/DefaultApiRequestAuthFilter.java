@@ -5,8 +5,12 @@ import cn.windflute.http.dto.ApiRequestDTO;
 import cn.windflute.http.servlet.PostParameterRequestWrapper;
 import cn.windflute.uitls.CollectionsUtil;
 import cn.windflute.uitls.SignUtil;
+import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContext;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +20,7 @@ import java.util.List;
  */
 public class DefaultApiRequestAuthFilter extends BaseApiRequestAuthFilter {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultApiRequestAuthFilter.class);
     /**
      * 数据库、缓存、上下文等方式获取应用的id所注册的Key
      * 这里默认使用ServletContext，因为一般接入的系统不多。
@@ -55,8 +60,16 @@ public class DefaultApiRequestAuthFilter extends BaseApiRequestAuthFilter {
         if (CollectionsUtil.isEmpty(nameList)) {
             return paramList;
         }
-        for (String name : nameList) {
-            paramList.add(String.valueOf(request.getParameter(name)));
+        JSONObject postParamJson = null;
+        try {
+            postParamJson = request.getPostParamJson();
+        } catch (IOException e) {
+            LOGGER.error("获取post参数JSON失败：{}",e);
+        }
+        if(null!=postParamJson && !postParamJson.isEmpty()){
+            for (String name : nameList) {
+                paramList.add(String.valueOf(postParamJson.get(name)));
+            }
         }
         return paramList;
     }
