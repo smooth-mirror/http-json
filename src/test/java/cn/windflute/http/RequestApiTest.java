@@ -12,7 +12,7 @@ import java.io.IOException;
  * @date 2019/8/30.
  */
 public class RequestApiTest {
-    @Test
+    //@Test
     public void test() throws IllegalAccessException, IOException {
         String json = JSON.toJSONString(TamperResistantHandler.getRequestJsonWithSign(null,"appId","appKey"));
         String result = OkHttpClientUtil.postJson("http://url",json);
