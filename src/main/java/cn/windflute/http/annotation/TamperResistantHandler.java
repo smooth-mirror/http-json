@@ -4,6 +4,7 @@ import cn.windflute.http.dto.ApiRequestDTO;
 import cn.windflute.uitls.ReflectUtil;
 import cn.windflute.uitls.SignUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.lang.reflect.Field;
@@ -40,7 +41,7 @@ public class TamperResistantHandler {
                 value = ReflectUtil.getFieldValue(object, field);
                 //注释了转成json，则先转成json
                 if (tamperResistantAnnotation.isTransJson()) {
-                    value = JSON.toJSONString(value);
+                    value = JSON.toJSONString(value, SerializerFeature.SortField);
                 }
                 //属性值为null的转成null字符串
                 map.put(field.getName(), String.valueOf(value));

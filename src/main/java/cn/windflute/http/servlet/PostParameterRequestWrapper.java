@@ -2,6 +2,7 @@ package cn.windflute.http.servlet;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.text.StringEscapeUtils;
 
@@ -132,7 +133,7 @@ public class PostParameterRequestWrapper extends HttpServletRequestWrapper {
    * @throws IOException
    */
   public JSONObject getPostParamJson() throws IOException {
-    return JSON.parseObject(getRequestParams());
+    return JSON.parseObject(getRequestParams(), Feature.OrderedField);
   }
   /**
    * enctype是application/x-www-form-urlencoded
