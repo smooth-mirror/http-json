@@ -1,6 +1,10 @@
 package cn.windflute.http;
 
+import cn.windflute.http.annotation.TamperResistantAnnotation;
+import com.alibaba.fastjson.JSON;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -13,11 +17,19 @@ public class SystemAuthorityDTO implements Serializable {
 
     private String name;
 
-    private String code;
-
     private String module;
 
     private String action;
+    @TamperResistantAnnotation(isTransJson = true)
+    private List<String> list;
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public void setList(List<String> list) {
+        this.list = list;
+    }
 
     public String getName() {
         return name;
@@ -27,13 +39,7 @@ public class SystemAuthorityDTO implements Serializable {
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
-    }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public String getModule() {
         return module;
@@ -53,11 +59,6 @@ public class SystemAuthorityDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "SystemAuthorityDTO{" +
-                "name='" + name + '\'' +
-                ", code='" + code + '\'' +
-                ", module='" + module + '\'' +
-                ", action='" + action + '\'' +
-                '}';
+        return JSON.toJSONString(this);
     }
 }
