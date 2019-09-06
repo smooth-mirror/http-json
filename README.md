@@ -1,6 +1,8 @@
 # java-http-json接口sdk使用指南
 环境要求：JDK1.8+、servlet3.1+
 使用前记得clone到本地然后install到本地maven仓库。
+接口提供方仅通过配置、写实现具体的签名规则方法和获取 appKey 的方法，即可实现。
+接口调用方仅通过注解、使用工具类、写签名规则方法和签名的参数拼接方法，即可实现。
 
 ## 接口提供方使用方式
 首先引入maven依赖或者引入jar包，参考DefaultApiRequestAuthFilter继承BaseApiRequestAuthFilter自定义filter过滤器，接口提供方提供了两种接入方式。
