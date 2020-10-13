@@ -25,7 +25,7 @@
         <!--ok http-->
         <okhttp3.version>3.13.1</okhttp3.version>
         <!--测试相关依赖-->
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 <dependencies>
     <!-- https://mvnrepository.com/artifact/com.google.auto.service/auto-service -->
