@@ -15,7 +15,7 @@
         <servlet-api.version>3.1.0</servlet-api.version>
         <!--工具类相关依赖-->
         <commons-codec.version>1.11</commons-codec.version>
-        <commons-io.version>2.4</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <commons-text.version>1.6</commons-text.version>
 
         <!--日志相关依赖-->
